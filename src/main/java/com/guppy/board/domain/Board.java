@@ -1,5 +1,7 @@
 package com.guppy.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "board")
 public class Board {
 
@@ -24,8 +27,8 @@ public class Board {
     @Field(value = "content")
     private String content;
 
-    @Field(value = "user_name")
-    private String userName;
+    @Field(value = "user")
+    private User user;
 
     @Field(value = "created_at")
     private DateTime createdAt;
@@ -34,4 +37,8 @@ public class Board {
     private List<Comment> comments;
 
 
+    @JsonIgnore
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

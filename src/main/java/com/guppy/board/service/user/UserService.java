@@ -1,4 +1,4 @@
-package com.guppy.board.service;
+package com.guppy.board.service.user;
 
 import com.guppy.board.domain.User;
 import com.guppy.board.repository.UserRepository;
@@ -29,7 +29,6 @@ public class UserService {
             return loginUser;
         }
 
-        //$2a$10$/L4lnbQy2Myy//jnnuHBNORmAkEcKuVWC6wE9H62GYfpOtAo7QyI2
         userRepository.save(loginUser);
 
         return loginUser;

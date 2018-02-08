@@ -1,7 +1,7 @@
 package com.guppy.board.controller;
 
 import com.guppy.board.domain.User;
-import com.guppy.board.service.UserService;
+import com.guppy.board.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

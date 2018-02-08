@@ -59,7 +59,6 @@ public class BoardRepositoryTest {
         Board board = Board.builder()
                 .title("게시글1")
                 .content("게시글 첫번째 내용")
-                .userName("구피")
                 .createdAt(new DateTime())
                 .comments(commentList).build();
 

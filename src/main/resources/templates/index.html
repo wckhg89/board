@@ -10,8 +10,20 @@
             $('#write').bind('click', function (e) {
                 e.preventDefault();
 
+
+                var boardJson = {
+                    "title": "게시글1",
+                    "content": "게시글 첫번째 내용"
+                };
+
                 var promise = $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
                     url: "/api/board/write",
+                    type: "POST",
+                    data: JSON.stringify(boardJson),
                     dataType: 'json'
                 });
 
