@@ -62,7 +62,7 @@ public class BoardRepositoryTest {
                 .createdAt(new DateTime())
                 .comments(commentList).build();
 
-        boardRepository.insert(board);
+        boardRepository.save(board);
     }
 
 

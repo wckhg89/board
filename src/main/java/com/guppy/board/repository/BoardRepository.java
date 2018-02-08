@@ -1,6 +1,8 @@
 package com.guppy.board.repository;
 
 import com.guppy.board.domain.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -8,4 +10,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * email : guppy.kang@kakaocorp.com
  */
 public interface BoardRepository extends MongoRepository<Board, Long>{
+
+    Page<Board> findAll(Pageable pageable);
 }

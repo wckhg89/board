@@ -1,10 +1,11 @@
 package com.guppy.board.service.user;
 
 import com.guppy.board.domain.Board;
-import com.guppy.board.domain.User;
 import com.guppy.board.repository.BoardRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,14 @@ public class BoardService {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+    public ResponseEntity<Page<Board>> findByMethod (Pageable pageable) {
+
+
+
+        return new ResponseEntity<>(boardRepository.findAll(pageable), HttpStatus.OK);
+    }
+
 
 }
