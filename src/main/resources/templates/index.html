@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $('#write').bind('click', function (e) {
+                e.preventDefault();
+
+                var promise = $.ajax({
+                    url: "/api/board/write",
+                    dataType: 'json'
+                });
+
+                promise.done(function (data){
+                    console.log(data);
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>guppy</h1>
+    <a href="/login/facebook">로그인</a>
+    <a href="/logout">로그아웃</a>
+
+    <a id="write">글쓰기</a>
+
+    <span th:text="${session.user != null} ? ${session.user.userName}"/>
+
+
+</body>
+
+
+</html>
