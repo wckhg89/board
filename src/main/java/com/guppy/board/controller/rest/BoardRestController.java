@@ -2,7 +2,7 @@ package com.guppy.board.controller.rest;
 
 import com.guppy.board.domain.Board;
 import com.guppy.board.domain.User;
-import com.guppy.board.service.user.BoardService;
+import com.guppy.board.service.board.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,7 +32,7 @@ public class BoardRestController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<HttpStatus> writeBoard (HttpSession session,
+    public ResponseEntity<String> writeBoard (HttpSession session,
                                             @RequestBody Board board) {
 
         User user = (User) session.getAttribute("user");
@@ -40,10 +40,10 @@ public class BoardRestController {
 
         boardService.save(board);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Successfully write",HttpStatus.CREATED);
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public ResponseEntity<Page<Board>> findBoards (Pageable pageable) {
 
         return boardService.findByMethod(pageable);

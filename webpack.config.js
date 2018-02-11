@@ -24,7 +24,13 @@ const config = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
-            }
+            },
+            {
+                test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                use: [{
+                    loader: 'file-loader'
+                }]
+            },
         ]
     },
     plugins : [
@@ -34,9 +40,7 @@ const config = {
             'window.jQuery': 'jquery',
             Backbone : "backbone",
             _ : "underscore",
-            Popper: ['popper.js', 'default'],
-            Util: "exports-loader?Util!bootstrap/js/dist/util",
-            Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+            Mustache: "mustache"
         }),
         new CommonsChunkPlugin({
             name: "common",

@@ -1,4 +1,4 @@
-package com.guppy.board.service.user;
+package com.guppy.board.service.board;
 
 import com.guppy.board.domain.Board;
 import com.guppy.board.repository.BoardRepository;

@@ -37,7 +37,7 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http.antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/guppy/dist/**", "/h2-console/**")
+                .antMatchers("/", "/login**", "/guppy/dist/**", "/api/board/list/**")
                 .permitAll().anyRequest()
                 .authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()

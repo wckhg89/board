@@ -2,51 +2,69 @@
 <html
         lang="en"
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{home/layout/layout}">
 <head>
-    <script src="/guppy/dist/common.js"></script>
-    <script src="/guppy/dist/app.js"></script>
+    <title>Hello, guppy!</title>
+    <!-- meta tags 필요 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
 
 <div layout:fragment="homeFragment">
-    <h1>guppy</h1>
+    <div id="guppyBoard">
 
-    <a class="btn btn-primary btn-sm" href="/login/facebook">로그인</a>
-    <a class="btn btn-danger btn-sm" href="/login/facebook">로그아웃</a>
-    <div th:if="${session.user != null}">
-        <a class="btn btn-dark" id="write">글쓰기</a>
-        <span th:text="${session.user != null} ? ${session.user.userName}"/>
     </div>
+    <script type="text/template" id="board-template">
+        <ol class="breadcrumb">
+            <li>
+                <a class="btn btn-social-icon btn-sm btn-kakao">
+                    <span class="fa fa-kakao"></span>
+                </a>
+            </li>
+            <li>
+                <a href="/login/facebook" class="btn btn-social-icon btn-sm btn-facebook">
+                    <span class="fa fa-facebook"></span>
+                </a>
+            </li>
+        </ol>
 
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small>3 days ago</small>
+        <div class="list-group">
+            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <input type="text" class="form-control" placeholder="축하 메시지를 남겨주세요.">
+                </div>
+                <p class="mb-1"></p>
+                <button id="boardWrite" type="button" class="btn btn-light">글쓰기</button>
             </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small>Donec id elit non mi porta.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
-    </div>
+        </div>
+
+        <ul class="nav nav-tabs" style="border-bottom: none;">
+            <li role="presentation" class="active"><a href="#">최신순</a></li>
+            <li role="presentation"><a href="#">과거순</a></li>
+        </ul>
+
+        <div class="list-group">
+            {{#content}}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{title}}</h5>
+                    <small>3 days ago</small>
+                </div>
+                <p class="mb-1">{{content}}</p>
+                <small>Donec id elit non mi porta.</small>
+            </a>
+            {{/content}}
+        </div>
+
+        <button type="button" class="btn btn-light btn-lg btn-block">더보기</button>
+
+    </script>
+
+    <script src="/guppy/dist/common.js"></script>
+    <script src="/guppy/dist/app.js"></script>
+
 </div >
 
 </body>
