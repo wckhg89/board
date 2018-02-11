@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-        lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="scriptsFragment">
+    <script src="/guppy/dist/common.js"></script>
+    <script src="/guppy/dist/app.js"></script>
+
+    <script type="text/javascript">
         $( document ).ready(function() {
             $('#write').bind('click', function (e) {
                 e.preventDefault();
@@ -33,18 +33,6 @@
             });
         });
     </script>
-</head>
-<body>
-    <h1>guppy</h1>
-    <a href="/login/facebook">로그인</a>
-    <a href="/logout">로그아웃</a>
-
-    <a id="write">글쓰기</a>
-
-    <span th:text="${session.user != null} ? ${session.user.userName}"/>
-
-
-</body>
-
+</div>
 
 </html>
