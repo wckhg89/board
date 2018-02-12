@@ -1,9 +1,8 @@
 import BoardTemplate from '../../template/board-template.html';
 import BoardCollection from '../collection/BoardCollection';
-
 import LoginModalView from './LoginModalView'
-import BoardModel from "../model/BoardModel";
 
+import BoardModel from "../model/BoardModel";
 
 'use strict';
 
@@ -36,7 +35,7 @@ export default Backbone.View.extend({
         this.collection.fetch({
             data: {page: page, size: size},
             success: function (options) {
-                self.render()
+                self.render();
             }, error: function (options) {
 
             }
@@ -57,6 +56,10 @@ export default Backbone.View.extend({
                 console.log(model)
             },
             error: function (model, resp) {
+                if (resp.status === 200) {
+                    alert("축하메시지를 작성해주셔서\n감사합니다:D")
+                }
+
                 if (resp.status === 401) {
                     new LoginModalView();
                 }

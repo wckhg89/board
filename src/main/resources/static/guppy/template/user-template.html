@@ -1,0 +1,32 @@
+{{#data}}
+<ol class="breadcrumb">
+    {{^userName}}
+    <li>
+        <a class="btn btn-social-icon btn-sm btn-kakao">
+            <span class="fa fa-kakao"></span>
+        </a>
+    </li>
+    <li>
+        <a href="/login/facebook" class="btn btn-social-icon btn-sm btn-facebook">
+            <span class="fa fa-facebook"></span>
+        </a>
+    </li>
+
+    <li>
+        <span>로그인 해주세요.</span>
+    </li>
+    {{/userName}}
+
+    {{#userName}}
+    <li>
+        <img src="{{userProfileUrl}}" style="border-radius: 20px"/>
+    </li>
+    <li>
+        <span>{{userName}} 님 환영합니다.</span>
+    </li>
+    <li>
+        <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+    </li>
+    {{/userName}}
+</ol>
+{{/data}}
