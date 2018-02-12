@@ -51,11 +51,4 @@ public class OauthController {
         return "redirect:/";
     }
 
-
-    @GetMapping("/unauthorized")
-    public ResponseEntity<Void> oauthError () {
-        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-    }
-
-
 }

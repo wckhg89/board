@@ -40,7 +40,7 @@ public class BoardRestController {
 
         boardService.save(board);
 
-        return new ResponseEntity<>("Successfully write",HttpStatus.CREATED);
+        return new ResponseEntity<>("Successfully write",HttpStatus.OK);
     }
 
     @GetMapping("/list")
