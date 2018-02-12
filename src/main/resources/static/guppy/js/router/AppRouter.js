@@ -6,6 +6,6 @@ export default Backbone.Router.extend({
     },
 
     init : function () {
-        new BoardView().initialize();
+        new BoardView();
     }
 });

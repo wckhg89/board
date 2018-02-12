@@ -31,6 +31,10 @@ const config = {
                     loader: 'file-loader'
                 }]
             },
+            {
+                test: /\.html$/,
+                loader: 'mustache-loader'
+            }
         ]
     },
     plugins : [
@@ -39,8 +43,7 @@ const config = {
             jQuery : "jquery",
             'window.jQuery': 'jquery',
             Backbone : "backbone",
-            _ : "underscore",
-            Mustache: "mustache"
+            _ : "underscore"
         }),
         new CommonsChunkPlugin({
             name: "common",

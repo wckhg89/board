@@ -1,72 +1,83 @@
+import BoardTemplate from '../../template/board-template.html';
+import BoardCollection from '../collection/BoardCollection';
+
+
 'use strict';
+import BoardModel from "../model/BoardModel";
 
 export default Backbone.View.extend({
     el : '#guppyBoard',
 
+    boardTpl: BoardTemplate,
+
     events: {
-        "click #boardWrite": "write"
+        'click #boardWrite': 'write',
+        'click #boardMore': 'read'
     },
 
+    // new View() 하면 자동 호출
     initialize: function() {
-        this.template = $('#board-template').html();
+        this.boardTpl = BoardTemplate;
+        this.collection = new BoardCollection();
 
+        this.listenTo(BoardModel, 'sync', this.handleModelSuccess);
+        this.listenTo(BoardModel, 'error', this.handleModelError);
+
+        this.listenTo(this.collection, 'sync', this.handleCollectionSuccess);
+        this.listenTo(this.collection, 'error', this.handleCollectionError);
+
+        this.read(1, 5);
+    },
+
+
+    handleModelSuccess: function (options) {
+        // options will be any options you passed when triggering the custom event
+        console.log('success', options)
+    },
+
+    handleModelError: function (options) {
+        // options will be any options you passed when triggering the custom event
+        console.log('error', options);
+    },
+
+    handleCollectionSuccess: function (options) {
+        // options will be any options you passed when triggering the custom event
         this.render()
     },
 
+    handleCollectionError: function (options) {
+        // options will be any options you passed when triggering the custom event
+        console.log('error', options);
+    },
+
     render () {
-
-        var promise = $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url: "/api/board/list?page=1&size=2",
-            type: "GET",
-            dataType: 'json'
-        });
-
-        var that = this;
-
-        promise.done(function (data) {
-            console.log(data);
-
-            Mustache.parse(that.template);
-            var rendered  = Mustache.render(that.template, data);
-            that.$el.html(rendered);
-        });
+        let rendered = this.boardTpl({content: this.collection.toJSON()});
+        this.$el.html(rendered);
 
         return this;
     },
 
+    read (page, size) {
+        this.collection.fetch({ data : {page: page, size: size} });
+    },
+
 
     write () {
-        var boardJson = {
-            "title": "게시글1",
-            "content": "게시글 첫번째 내용"
-        };
-
-        var promise = $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url: "/api/board/write",
-            type: "POST",
-            data: JSON.stringify(boardJson),
-            dataType: 'json'
+        let newBoard = new BoardModel({
+            title: 'Guppy',
+            contents: 'Hung-Guppy',
+            createdAt: moment.now()
         });
 
-
-
-        promise.complete(function (data) {
-            if (data.status === 200) {
-                // todo : floating modal view
-                return;
+        newBoard.save(null, {
+            type: 'POST',
+            success: function (model, resp) {
+                console.log(model)
+            },
+            error: function (model, resp) {
+                // todo login modal
+                console.log(model)
             }
-
-            if (data.status === 201) {
-                render();
-            }
-        })
+        });
     }
 });

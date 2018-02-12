@@ -1,26 +1,22 @@
+
+
 'use strict';
 
 export default Backbone.Model.extend({
 
+    idAttribute: '_id',
+    url: '/api/board/write',
+
     defaults() {
         return {
+            _id: '',
             title: '',
-            completed: false
+            contents: '',
+            createdAt: ''
         }
     },
 
     initialize() {
-        if (!this.get('title')) {
-            this.set({ 'title': this.defaults().title });
-        }
-    },
 
-    toggle() {
-        this.save({ completed: !this.get('completed') });
-    },
-
-    clear() {
-        this.destroy();
     }
-
-})
+});

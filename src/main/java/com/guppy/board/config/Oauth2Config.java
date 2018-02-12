@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -32,18 +33,27 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
     @Autowired
     private OAuth2ClientContext oauth2ClientContext;
 
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/guppy/dist/**", "/api/board/list/**")
-                .permitAll().anyRequest()
-                .authenticated().and().exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
+                .antMatchers("/",
+                        "/login**",
+                        "/guppy/dist/**",
+                        "/api/board/list/**").permitAll().anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/"))
+                .and().logout()
                 .logoutSuccessUrl("/").permitAll().and().csrf().disable()
-                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-                .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+                .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+                .exceptionHandling() .authenticationEntryPoint(restAuthenticationEntryPoint);
+
 
         http.headers().frameOptions().disable();
 
@@ -59,6 +69,7 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
                 new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId()));
         facebookFilter.setAuthenticationSuccessHandler((request,response, authentication) -> response.sendRedirect("/facebook/complete"));
         facebookFilter.setAuthenticationFailureHandler((request,response, authentication) -> response.sendRedirect("/"));
+
 
         return facebookFilter;
     }
