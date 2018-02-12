@@ -1,8 +1,8 @@
-import BoardTemplate from '../../template/board-template.html';
-import BoardCollection from '../collection/BoardCollection';
+import BoardTemplate from '../../../template/component/board-template.html';
+import BoardCollection from '../../collection/BoardCollection';
 import LoginModalView from './LoginModalView'
 
-import BoardModel from "../model/BoardModel";
+import BoardModel from "../../model/BoardModel";
 
 'use strict';
 

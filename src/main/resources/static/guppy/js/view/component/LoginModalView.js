@@ -1,4 +1,4 @@
-import LoginModalTemplate from '../../template/login-modal-template.html';
+import LoginModalTemplate from '../../../template/component/login-modal-template.html';
 
 'use strict';
 

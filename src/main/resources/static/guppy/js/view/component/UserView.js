@@ -1,5 +1,5 @@
-import UserModel from '../model/UserModel'
-import UserTemplate from '../../template/user-template.html'
+import UserModel from '../../model/UserModel'
+import UserTemplate from '../../../template/component/user-template.html'
 
 'use strict';
 

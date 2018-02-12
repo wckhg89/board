@@ -1,5 +1,4 @@
-import UserView from "../view/UserView";
-import BoardView from '../view/BoardView'
+import LayoutView from "../view/LayoutView";
 
 'use strict';
 
@@ -10,7 +9,6 @@ export default Backbone.Router.extend({
     },
 
     init : function () {
-        new UserView();
-        new BoardView();
+        new LayoutView();
     }
 });
