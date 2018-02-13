@@ -1,0 +1,20 @@
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.4.RELEASE'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.2.1.RELEASE'
+
+
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf') {
+        exclude group: 'nz.net.ultraq.thymeleaf', module: 'thymeleaf-layout-dialect'
+    }
+    compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.2.2'
+
+    compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}

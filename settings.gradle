@@ -1,0 +1,5 @@
+rootProject.name = 'board'
+
+include 'server'
+include 'client'
+
