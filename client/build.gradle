@@ -1,0 +1,6 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
+apply plugin: 'groovy'
+apply plugin: "com.moowork.node"
