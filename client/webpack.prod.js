@@ -20,7 +20,7 @@ module.exports = {
         })
     ],
     output: {
-        path: path.resolve(__dirname, 'src/main/resources/static/guppy/dist'),
+        path: path.resolve(__dirname, 'static/guppy/dist'),
         filename: '[name].js'
     },
 };

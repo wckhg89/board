@@ -1,6 +1,24 @@
-apply plugin: 'java'
-apply plugin: 'spring-boot'
+buildscript {
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
 
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+group 'com.guppy'
+version '1.0'
 sourceCompatibility = 1.8
 
 dependencies {
