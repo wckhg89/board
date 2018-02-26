@@ -21,8 +21,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User loginComplete (Authentication authentication) {
-        User loginUser = User.initUser(authentication);
+    public User loginComplete (Authentication authentication, String type) {
+        User loginUser = User.initUser(authentication, type);
         User dbUser = userRepository.findByUserKey(loginUser.getUserKey());
 
         if (dbUser != null) {

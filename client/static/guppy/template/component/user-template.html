@@ -2,7 +2,7 @@
 <ol class="breadcrumb">
     {{^userName}}
     <li>
-        <a class="btn btn-social-icon btn-sm btn-kakao">
+        <a href="/login/kakao" class="btn btn-social-icon btn-sm btn-kakao">
             <span class="fa fa-kakao"></span>
         </a>
     </li>
@@ -19,7 +19,7 @@
 
     {{#userName}}
     <li>
-        <img src="{{userProfileUrl}}" style="border-radius: 20px"/>
+        <img src="{{userProfileUrl}}" style="border-radius: 20px;width:30px;height:30px;"/>
     </li>
     <li>
         <span>{{userName}} 님 환영합니다.</span>

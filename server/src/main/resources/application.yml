@@ -18,6 +18,14 @@ facebook:
   resource:
     userInfoUri: https://graph.facebook.com/me
 
+kakao :
+  client :
+    clientId: 5ac1592d79d43524f626d3eb0dc2dfae
+    accessTokenUri: https://kauth.kakao.com/oauth/token
+    userAuthorizationUri: https://kauth.kakao.com/oauth/authorize
+  resource:
+    userInfoUri: https://kapi.kakao.com/v1/user/me
+
 logging:
   level:
     org.springframework.security: INFO

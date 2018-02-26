@@ -43,7 +43,25 @@ public class OauthController {
         Authentication authentication
                 = ((OAuth2Authentication) principal).getUserAuthentication();
 
-        User user = userService.loginComplete(authentication);
+        User user = userService.loginComplete(authentication, "facebook");
+
+        // todo : 만일 서버가 여러대이면 Redis와 같은 글로벌 캐시를 써서 세션 관리를 해야함
+        httpSession.setAttribute("user", user);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/kakao/complete")
+    public String kakaoComplete (Principal principal, HttpSession httpSession) {
+        if (principal == null) {
+            // TODO : 익셉션 던지자
+            return "error";
+        }
+
+        Authentication authentication
+                = ((OAuth2Authentication) principal).getUserAuthentication();
+
+        User user = userService.loginComplete(authentication, "kakao");
 
         // todo : 만일 서버가 여러대이면 Redis와 같은 글로벌 캐시를 써서 세션 관리를 해야함
         httpSession.setAttribute("user", user);

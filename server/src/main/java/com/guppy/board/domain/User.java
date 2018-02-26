@@ -40,46 +40,64 @@ public class User {
     @Field("user_url")
     private String userUrl;
 
-    private User(Authentication authentication) {
-        this.setUserInfo(authentication);
+    private User(Authentication authentication, String type) {
+        this.setUserInfo(authentication, type);
     }
 
-    public static User initUser(Authentication authentication) {
-        return new User(authentication);
+    public static User initUser(Authentication authentication, String type) {
+        return new User(authentication, type);
     }
 
-    public void setUserInfo(Authentication authentication) {
+    public void setUserInfo(Authentication authentication, String type) {
         HashMap<String, String> detailMap
                 = (HashMap<String, String>) authentication.getDetails();
 
-        this.userName = detailMap.get("name");
-        this.userPrincipal = detailMap.get("id");
-        this.socialType = "FACEBOOK"; // TODO: 다른 소셜 붙일때 수정 필요
+
+
+
+        this.socialType = type;
+
+        if ("kakao".equals(type)) {
+            HashMap<String, String> propertyMap = (HashMap<String, String>)(Object) detailMap.get("properties");
+            this.userPrincipal = String.valueOf(detailMap.get("id"));
+            this.userName = propertyMap.get("nickname");
+            this.setKakaoInitUserUrl(propertyMap.get("thumbnail_image"));
+        }
+
+        if ("facebook".equals(type)) {
+            this.userPrincipal = detailMap.get("id");
+            this.userName = detailMap.get("name");
+            this.setFacebookUrl();
+        }
 
         this.setUserKey();
-        this.setUrl();
+
+
     }
 
-    public void setUrl() {
+    public void setKakaoInitUserUrl(String userProfileUrl) {
+        this.userProfileUrl = userProfileUrl;
+    }
+
+
+    public void setFacebookUrl() {
         StringBuilder builder = new StringBuilder();
 
-        setInitUserProfileUrl(builder);
+        setFacebookInitUserProfileUrl(builder);
 
         builder.setLength(0);
 
-        setInitUserUrl(builder);
+        setFacebookInitUserUrl(builder);
     }
 
-
-
-    private void setInitUserUrl(StringBuilder builder) {
+    private void setFacebookInitUserUrl(StringBuilder builder) {
         this.userUrl = builder
                 .append("https://facebook.com/")
                 .append(userPrincipal)
                 .toString();
     }
 
-    private void setInitUserProfileUrl(StringBuilder builder) {
+    private void setFacebookInitUserProfileUrl(StringBuilder builder) {
         this.userProfileUrl = builder
                 .append("http://graph.facebook.com/")
                 .append(userPrincipal)
@@ -97,4 +115,6 @@ public class User {
 
         this.userKey = BCrypt.hashpw(builder.toString(), salt);
     }
+
+
 }

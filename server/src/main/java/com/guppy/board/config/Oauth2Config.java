@@ -19,8 +19,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kanghonggu on 2017. 7. 13..
@@ -61,6 +64,9 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
     }
 
     private Filter ssoFilter() {
+
+        List<Filter> filters = new ArrayList<>();
+
         OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
                 "/login/facebook");
         OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
@@ -69,9 +75,22 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
                 new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId()));
         facebookFilter.setAuthenticationSuccessHandler((request,response, authentication) -> response.sendRedirect("/facebook/complete"));
         facebookFilter.setAuthenticationFailureHandler((request,response, authentication) -> response.sendRedirect("/"));
+        filters.add(facebookFilter);
 
+        OAuth2ClientAuthenticationProcessingFilter kakaoFilter = new OAuth2ClientAuthenticationProcessingFilter(
+                "/login/kakao");
+        OAuth2RestTemplate kakaoTemplate = new OAuth2RestTemplate(kakao(), oauth2ClientContext);
+        kakaoFilter.setRestTemplate(kakaoTemplate);
+        kakaoFilter.setTokenServices(
+                new UserInfoTokenServices(kakaoResource().getUserInfoUri(), kakao().getClientId()));
+        kakaoFilter.setAuthenticationSuccessHandler((request,response, authentication) -> response.sendRedirect("/kakao/complete"));
+        kakaoFilter.setAuthenticationFailureHandler((request,response, authentication) -> response.sendRedirect("/"));
+        filters.add(kakaoFilter);
 
-        return facebookFilter;
+        CompositeFilter filter = new CompositeFilter();
+        filter.setFilters(filters);
+
+        return filter;
     }
 
     @Bean
@@ -93,4 +112,18 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
     public ResourceServerProperties facebookResource() {
         return new ResourceServerProperties();
     }
+
+    @Bean
+    @ConfigurationProperties("kakao.client")
+    public AuthorizationCodeResourceDetails kakao() {
+        return new AuthorizationCodeResourceDetails();
+    }
+
+    @Bean
+    @ConfigurationProperties("kakao.resource")
+    public ResourceServerProperties kakaoResource() {
+        return new ResourceServerProperties();
+    }
+
+
 }
