@@ -35,9 +35,6 @@ public class BoardService {
 
 
     public ResponseEntity<Page<Board>> findByMethod (Pageable pageable) {
-
-
-
         return new ResponseEntity<>(boardRepository.findAll(pageable), HttpStatus.OK);
     }
 

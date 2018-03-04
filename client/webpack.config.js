@@ -43,6 +43,7 @@ const config = {
             jQuery : "jquery",
             'window.jQuery': 'jquery',
             Backbone : "backbone",
+            PageableCollection : "backbone.paginator",
             _ : "underscore"
         }),
         new CommonsChunkPlugin({

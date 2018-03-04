@@ -1,7 +1,7 @@
 <div class="list-group">
     <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
-            <input type="text" class="form-control" placeholder="축하 메시지를 남겨주세요.">
+            <input type="text" id="boardText" class="form-control" placeholder="축하 메시지를 남겨주세요.">
         </div>
         <p class="mb-1"></p>
         <button id="boardWrite" type="button" class="btn btn-default">글쓰기</button>
@@ -9,27 +9,17 @@
 </div>
 
 <ul class="nav nav-tabs" style="border-bottom: none;">
-    <li role="presentation" class="active"><a href="#">최신순</a></li>
-    <li role="presentation"><a href="#">과거순</a></li>
+    <li role="presentation" class="active" id="boardRecent"><a href="javascript:void(0);">최신순</a></li>
+    <li role="presentation" id="boardOlder"><a href="javascript:void(0);">과거순</a></li>
 </ul>
 
-<div class="list-group">
-    {{#content}}
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{title}}</h5>
-            <small>3 days ago</small>
-        </div>
-        <p class="mb-1">{{contents}}</p>
-        <small>Donec id elit non mi porta.</small>
-    </a>
-    {{/content}}
+<div class="list-group" id="boardList">
+
 </div>
 
 <button id="boardMore" type="button" class="btn btn-default btn-lg btn-block" style="border-radius: 0px">
     더보기
 </button>
-
 
 
 <!-- Modal -->

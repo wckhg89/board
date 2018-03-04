@@ -10,8 +10,14 @@ export default Backbone.Model.extend({
             _id: '',
             title: '',
             contents: '',
-            createdAt: ''
+            createdAt: '',
+            user_name: ''
         }
+    },
+
+    parse: function (data) {
+        console.log(data);
+        return data;
     },
 
     initialize() {

@@ -40,7 +40,7 @@ public class BoardRestController {
 
         boardService.save(board);
 
-        return new ResponseEntity<>("Successfully write",HttpStatus.OK);
+        return new ResponseEntity<>("{\"ok\":\"Registration succeeded\"}",HttpStatus.OK);
     }
 
     @GetMapping("/list")

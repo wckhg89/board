@@ -23,7 +23,6 @@ export default Backbone.View.extend({
     },
 
     render () {
-        console.log(this.model.toJSON());
         let rendered = this.userTpl({data: this.model.toJSON()});
         this.$el.html(rendered);
 

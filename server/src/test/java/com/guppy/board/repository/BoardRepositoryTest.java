@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -71,6 +72,15 @@ public class BoardRepositoryTest {
     public void findAllBoardTest () throws JsonProcessingException {
         logger.info("Find All Test Start");
         List<Board> boardList = boardRepository.findAll();
+
+        Assert.assertNotNull(boardList);
+        logger.info(objectMapper.writeValueAsString(boardList));
+    }
+
+    @Test
+    public void findAllSortTest () throws JsonProcessingException {
+        Sort sort = new Sort(Sort.Direction.DESC, "created_at");
+        List<Board> boardList = boardRepository.findAll(sort);
 
         Assert.assertNotNull(boardList);
         logger.info(objectMapper.writeValueAsString(boardList));

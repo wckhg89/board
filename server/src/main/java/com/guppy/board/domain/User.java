@@ -52,9 +52,6 @@ public class User {
         HashMap<String, String> detailMap
                 = (HashMap<String, String>) authentication.getDetails();
 
-
-
-
         this.socialType = type;
 
         if ("kakao".equals(type)) {

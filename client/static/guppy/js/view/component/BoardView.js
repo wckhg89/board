@@ -1,4 +1,5 @@
 import BoardTemplate from '../../../template/component/board-template.html';
+import BoardListTemplate from '../../../template/component/board-list-template.html';
 import BoardCollection from '../../collection/BoardCollection';
 import LoginModalView from './LoginModalView'
 
@@ -8,58 +9,87 @@ import BoardModel from "../../model/BoardModel";
 
 export default Backbone.View.extend({
     el : '#guppyBoard',
-
     boardTpl: BoardTemplate,
-
+    boardListTpl : BoardListTemplate,
     events: {
         'click #boardWrite': 'write',
-        'click #boardMore': 'read'
+        'click #boardMore': 'more',
+        'click #boardRecent': 'recent',
+        'click #boardOlder': 'older'
     },
 
     // new View() 하면 자동 호출
     initialize: function() {
+        this.render();
         this.collection = new BoardCollection();
-        this.read(1, 5);
+        this.collection.fetchPage("desc");
+
+        this.listenTo(this.collection, 'renderList', this.renderList);
+        this.listenTo(this.collection, 'appendList', this.appendList);
+
+
     },
 
     render () {
-        let rendered = this.boardTpl({content: this.collection.toJSON()});
+        let rendered = this.boardTpl();
         this.$el.html(rendered);
 
         return this;
     },
 
-    read (page, size) {
-        let self = this;
-
-        this.collection.fetch({
-            data: {page: page, size: size},
-            success: function (options) {
-                self.render();
-            }, error: function (options) {
-
-            }
-        });
+    appendList () {
+        console.log("append");
+        let rendered = this.boardListTpl({content: this.collection.toJSON()});
+        this.$el.find('#boardList').append(rendered);
     },
 
+    renderList () {
+        console.log("render");
+        let rendered = this.boardListTpl({content: this.collection.toJSON()});
+        this.$el.find('#boardList').html(rendered);
+    },
+
+    more () {
+        this.collection.fetchMorePage();
+    },
+
+    recent () {
+        let $boardRecent = this.$el.find('#boardRecent');
+        let $boardOlder = this.$el.find('#boardOlder');
+
+        $boardRecent.addClass("active");
+        $boardOlder.hasClass("active") ? $boardOlder.removeClass("active") : null;
+
+        this.collection.fetchPage("desc");
+    },
+
+    older () {
+
+        let $boardRecent = this.$el.find('#boardRecent');
+        let $boardOlder = this.$el.find('#boardOlder');
+
+        $boardOlder.addClass("active");
+        $boardRecent.hasClass("active") ? $boardRecent.removeClass("active") : null;
+
+        this.collection.fetchPage("asc");
+    },
 
     write () {
+        let self = this;
         let newBoard = new BoardModel({
-            title: 'Guppy',
-            contents: 'Hung-Guppy',
+            title: $("#boardText").val(),
+            contents: null,
             createdAt: moment.now()
         });
 
         newBoard.save(null, {
             type: 'POST',
             success: function (model, resp) {
-                console.log(model)
+                alert("축하메시지를 작성해주셔서\n감사합니다:D");
+                self.recent();
+
             },
             error: function (model, resp) {
-                if (resp.status === 200) {
-                    alert("축하메시지를 작성해주셔서\n감사합니다:D")
-                }
-
                 if (resp.status === 401) {
                     new LoginModalView();
                 }
