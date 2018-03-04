@@ -13,16 +13,13 @@ export default Backbone.View.extend({
         let self = this;
         this.model = new UserModel();
 
-        this.model.fetch({
-            success: function (options) {
-                self.render();
-            }, error: function (options) {
-                self.render();
-            }
-        });
+        this.listenTo(this.model, 'renderUserInfo', this.renderUserInfo);
+
+        this.model.fetchModel();
+
     },
 
-    render () {
+    renderUserInfo () {
         let rendered = this.userTpl({data: this.model.toJSON()});
         this.$el.html(rendered);
 

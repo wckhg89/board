@@ -27,7 +27,14 @@ export default Backbone.View.extend({
         this.listenTo(this.collection, 'renderList', this.renderList);
         this.listenTo(this.collection, 'appendList', this.appendList);
 
+        this.listenTo(this.model, 'recent', this.recent);
+        this.listenTo(this.model, 'renderModal', this.renderModal);
 
+
+    },
+
+    renderModal () {
+        new LoginModalView();
     },
 
     render () {
@@ -38,13 +45,11 @@ export default Backbone.View.extend({
     },
 
     appendList () {
-        console.log("append");
         let rendered = this.boardListTpl({content: this.collection.toJSON()});
         this.$el.find('#boardList').append(rendered);
     },
 
     renderList () {
-        console.log("render");
         let rendered = this.boardListTpl({content: this.collection.toJSON()});
         this.$el.find('#boardList').html(rendered);
     },
@@ -76,24 +81,26 @@ export default Backbone.View.extend({
 
     write () {
         let self = this;
-        let newBoard = new BoardModel({
+        this.model = new BoardModel({
             title: $("#boardText").val(),
             contents: null,
             createdAt: moment.now()
         });
 
-        newBoard.save(null, {
-            type: 'POST',
-            success: function (model, resp) {
-                alert("축하메시지를 작성해주셔서\n감사합니다:D");
-                self.recent();
+        this.model.saveBoard();
 
-            },
-            error: function (model, resp) {
-                if (resp.status === 401) {
-                    new LoginModalView();
-                }
-            }
-        });
+        // newBoard.save(null, {
+        //     type: 'POST',
+        //     success: function (model, resp) {
+        //         alert("축하메시지를 작성해주셔서\n감사합니다:D");
+        //         self.recent();
+        //
+        //     },
+        //     error: function (model, resp) {
+        //         if (resp.status === 401) {
+        //             new LoginModalView();
+        //         }
+        //     }
+        // });
     }
 });

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class BoardRestController {
         this.boardService = boardService;
     }
 
-    @PostMapping("/write")
+    @PostMapping(value= "/write", produces = MediaType.APPLICATION_JSON_VALUE)//,headers = "Accept=application/json", produces =  "application/javascript" )
     public ResponseEntity<String> writeBoard (HttpSession session,
                                             @RequestBody Board board) {
 
@@ -43,7 +44,7 @@ public class BoardRestController {
         return new ResponseEntity<>("{\"ok\":\"Registration succeeded\"}",HttpStatus.OK);
     }
 
-    @GetMapping("/list")
+    @GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_VALUE)//,headers = "Accept=application/json", produces =  "application/javascript" )
     public ResponseEntity<Page<Board>> findBoards (Pageable pageable) {
 
         return boardService.findByMethod(pageable);

@@ -2,6 +2,7 @@ package com.guppy.board.controller.rest;
 
 import com.guppy.board.domain.User;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/api/user")
 public class UserRestController {
 
-    @GetMapping("/info")
+    @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> writeBoard (HttpSession session) {
 
         User user = (User) session.getAttribute("user");

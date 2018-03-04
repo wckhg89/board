@@ -47,7 +47,8 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
                 .antMatchers("/",
                         "/login/**",
                         "/guppy/dist/**",
-                        "/api/board/list/**").permitAll().anyRequest()
+                        "/api/board/list/**",
+                        "/api/user/info/**").permitAll().anyRequest()
                 .authenticated()
                 .and()
                 .exceptionHandling()

@@ -9,7 +9,7 @@ module.exports = {
         host: "0.0.0.0",
         port: 3000,
         proxy: {
-            "**": "http://localhost:8080"
+            "**": "http://localhost:8081"
         }
 
     },
@@ -21,4 +21,5 @@ module.exports = {
         publicPath: '/guppy/dist',
         filename: '[name].js'
     },
+
 };

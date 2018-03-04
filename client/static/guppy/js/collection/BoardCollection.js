@@ -4,7 +4,7 @@ import BoardModel from '../model/BoardModel'
 
 export default Backbone.Collection.extend({
     model : BoardModel,
-    url: '/api/board/list',
+    url: 'http://localhost:8081/api/board/list',
 
     initialize:function () {
         this.totalCount = 0;
@@ -16,6 +16,13 @@ export default Backbone.Collection.extend({
         this.sort = "created_at";
         this.dir = "desc";
     },
+
+    sync : function(method, collection, options) {
+        options.dataType = "jsonp";
+        options.contentType = "application/javascript";
+        return Backbone.sync(method, collection, options);
+    },
+
 
     parse: function(data) {
         this.totalCount = data.totalElements;
@@ -37,6 +44,7 @@ export default Backbone.Collection.extend({
         this.fetch({
             reset: true,
             data: data,
+            contentType: "application/javascript",
             success: function (collection, response, options) {
                 self.trigger('renderList');
             }
