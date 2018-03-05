@@ -20,7 +20,8 @@ module.exports = {
         })
     ],
     output: {
-        path: path.resolve(__dirname, 'static/guppy/dist'),
+        path: path.resolve(__dirname, 'static/guppy/dist/'),
+        publicPath: '/guppy/dist/',
         filename: '[name].js'
     },
 };

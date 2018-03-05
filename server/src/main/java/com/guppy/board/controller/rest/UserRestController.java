@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class UserRestController {
 
     @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> writeBoard (HttpSession session) {
+    public ResponseEntity<User> getUserInfo (HttpSession session) {
 
         User user = (User) session.getAttribute("user");
 

@@ -1,7 +1,6 @@
 import BoardTemplate from '../../../template/component/board-template.html';
 import BoardListTemplate from '../../../template/component/board-list-template.html';
 import BoardCollection from '../../collection/BoardCollection';
-import LoginModalView from './LoginModalView'
 
 import BoardModel from "../../model/BoardModel";
 
@@ -29,13 +28,9 @@ export default Backbone.View.extend({
 
         this.listenTo(this.model, 'recent', this.recent);
         this.listenTo(this.model, 'renderModal', this.renderModal);
-
-
     },
 
-    renderModal () {
-        new LoginModalView();
-    },
+
 
     render () {
         let rendered = this.boardTpl();

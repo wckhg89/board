@@ -1,9 +1,8 @@
 
-
 'use strict';
 
 export default Backbone.Model.extend({
-    url: 'http://localhost:8081/api/user/info',
+    url: 'http://13.125.34.108:8081/api/user/info',
 
     defaults() {
         return {

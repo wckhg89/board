@@ -1,5 +1,6 @@
 package com.guppy.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,12 +27,14 @@ public class User {
     private String userName;
 
     @Field("user_principal")
+    @JsonIgnore
     private String userPrincipal;
 
     @Field("social_type")
     private String socialType;
 
     @Field("user_key")
+    @JsonIgnore
     private String userKey;
 
     @Field("user_profile_url")

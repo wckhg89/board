@@ -5,7 +5,7 @@ const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 const config = {
     entry: {
-        app: path.resolve(__dirname, 'static/guppy/js/App.js'),
+        board_app: path.resolve(__dirname, 'static/guppy/js/App.js'),
     },
     module: {
         rules: [
@@ -46,8 +46,8 @@ const config = {
             _ : "underscore"
         }),
         new CommonsChunkPlugin({
-            name: "common",
-            filename: "common.js",
+            name: "board_common",
+            filename: "board_common.js",
             minChunks: Infinity
         })
     ]

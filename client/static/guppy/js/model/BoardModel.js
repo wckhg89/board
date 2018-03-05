@@ -1,9 +1,11 @@
+import LoginModalView from "../view/component/LoginModalView";
+
 'use strict';
 
 export default Backbone.Model.extend({
 
     idAttribute: '_id',
-    url: 'http://localhost:8081/api/board/write',
+    url: 'http://13.125.34.108:8081/api/board/write',
 
     defaults() {
         return {
@@ -15,11 +17,11 @@ export default Backbone.Model.extend({
         }
     },
 
-    sync : function(method, collection, options) {
-        options.dataType = "jsonp";
-        options.contentType = "application/javascript";
-        return Backbone.sync(method, collection, options);
-    },
+    // sync : function(method, collection, options) {
+    //     options.dataType = "jsonp";
+    //     options.contentType = "application/javascript";
+    //     return Backbone.sync(method, collection, options);
+    // },
 
 
     parse: function(data) {
@@ -27,6 +29,11 @@ export default Backbone.Model.extend({
     },
 
     initialize() {
+    },
+
+    renderModal () {
+        console.log("!");
+        new LoginModalView();
     },
 
     saveBoard : function () {
@@ -40,7 +47,7 @@ export default Backbone.Model.extend({
             },
             error: function (model, resp) {
                 if (resp.status === 401 || resp.status === 400) {
-                    self.trigger('renderModal');
+                    self.renderModal();
                 }
             }
         });

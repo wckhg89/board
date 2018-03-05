@@ -1,5 +1,6 @@
 package com.guppy.board.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guppy.board.domain.module.DateTimeModule;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ public class MessageConverterConfig {
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = new ObjectMapper();
         // 생성한 모듈을 등록해 준다.
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new DateTimeModule());
         jsonConverter.setObjectMapper(objectMapper);
 

@@ -32,7 +32,7 @@ public class BoardRestController {
         this.boardService = boardService;
     }
 
-    @PostMapping(value= "/write", produces = MediaType.APPLICATION_JSON_VALUE)//,headers = "Accept=application/json", produces =  "application/javascript" )
+    @PostMapping(value= "/write", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> writeBoard (HttpSession session,
                                             @RequestBody Board board) {
 
@@ -44,7 +44,7 @@ public class BoardRestController {
         return new ResponseEntity<>("{\"ok\":\"Registration succeeded\"}",HttpStatus.OK);
     }
 
-    @GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_VALUE)//,headers = "Accept=application/json", produces =  "application/javascript" )
+    @GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Board>> findBoards (Pageable pageable) {
 
         return boardService.findByMethod(pageable);

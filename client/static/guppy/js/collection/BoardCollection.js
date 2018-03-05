@@ -4,7 +4,7 @@ import BoardModel from '../model/BoardModel'
 
 export default Backbone.Collection.extend({
     model : BoardModel,
-    url: 'http://localhost:8081/api/board/list',
+    url: 'http://13.125.34.108:8081/api/board/list',
 
     initialize:function () {
         this.totalCount = 0;
