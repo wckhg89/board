@@ -44,8 +44,8 @@ public class OauthController {
         // todo : 만일 서버가 여러대이면 Redis와 같은 글로벌 캐시를 써서 세션 관리를 해야함
         httpSession.setAttribute("user", user);
 
-        //return "redirect:http://hwjswedding.com/";
-        return "redirect:/";
+        return "redirect:http://hwjswedding.com/";
+//        return "redirect:/";
     }
 
     @GetMapping("/kakao/complete")
@@ -63,8 +63,8 @@ public class OauthController {
         // todo : 만일 서버가 여러대이면 Redis와 같은 글로벌 캐시를 써서 세션 관리를 해야함
         httpSession.setAttribute("user", user);
 
-        //return "redirect:http://hwjswedding.com/";
-        return "redirect:/";
+        return "redirect:http://hwjswedding.com/";
+//        return "redirect:/";
     }
 
 }

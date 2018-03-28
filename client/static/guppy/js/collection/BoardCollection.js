@@ -4,8 +4,8 @@ import BoardModel from '../model/BoardModel'
 
 export default Backbone.Collection.extend({
     model : BoardModel,
-    // url: 'http://hwjswedding.com:8081/api/board/list',
-    url: 'http://localhost:8081/api/board/list',
+    url: 'http://hwjswedding.com:8081/api/board/list',
+    // url: 'http://localhost:8081/api/board/list',
 
     initialize:function () {
         this.totalCount = 0;

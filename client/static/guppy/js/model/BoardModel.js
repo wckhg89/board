@@ -5,8 +5,8 @@ import LoginModalView from "../view/component/LoginModalView";
 export default Backbone.Model.extend({
 
     idAttribute: '_id',
-    // url: 'http://hwjswedding.com:8081/api/board/write',
-    url: 'http://localhost:8081/api/board/write',
+    url: 'http://hwjswedding.com:8081/api/board/write',
+    // url: 'http://localhost:8081/api/board/write',
 
     defaults() {
         return {

@@ -2,8 +2,8 @@
 'use strict';
 
 export default Backbone.Model.extend({
-    // url: 'http://hwjswedding.com:8081/api/user/info',
-    url: 'http://localhost:8081/api/user/info',
+    url: 'http://hwjswedding.com:8081/api/user/info',
+    // url: 'http://localhost:8081/api/user/info',
 
     defaults() {
         return {
