@@ -1,7 +1,7 @@
 import BoardTemplate from '../../../template/component/board-template.html';
 import BoardListTemplate from '../../../template/component/board-list-template.html';
-import BoardCollection from '../../collection/BoardCollection';
 
+import BoardCollection from '../../collection/BoardCollection';
 import BoardModel from "../../model/BoardModel";
 
 'use strict';
@@ -75,7 +75,6 @@ export default Backbone.View.extend({
     },
 
     write () {
-        let self = this;
         this.model = new BoardModel({
             title: $("#boardText").val(),
             contents: null,
@@ -83,19 +82,5 @@ export default Backbone.View.extend({
         });
 
         this.model.saveBoard();
-
-        // newBoard.save(null, {
-        //     type: 'POST',
-        //     success: function (model, resp) {
-        //         alert("축하메시지를 작성해주셔서\n감사합니다:D");
-        //         self.recent();
-        //
-        //     },
-        //     error: function (model, resp) {
-        //         if (resp.status === 401) {
-        //             new LoginModalView();
-        //         }
-        //     }
-        // });
     }
 });

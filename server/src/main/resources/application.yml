@@ -1,5 +1,6 @@
 server:
   port: 8081
+
 spring:
   thymeleaf:
       mode: LEGACYHTML5
@@ -7,6 +8,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/mongo-test
+#  mvc:
+#    dispatch-options-request: true
 
 facebook:
   client:

@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -16,13 +15,17 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,31 +44,33 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
         http.antMatcher("/**")
                 .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/",
                         "/login/**",
                         "/guppy/dist/**",
-                        "/api/user/info/**",
-                        "/api/board/list/**").permitAll().anyRequest()
-                .authenticated()
+                        "/api/exception/**",
+                        "/api/board/list/**"
+                ).permitAll()
+                .anyRequest().fullyAuthenticated()
                 .and()
+                .logout().logoutSuccessUrl("/").permitAll()
+                .and()
+                .addFilterAt(ssoFilter(), BasicAuthenticationFilter.class).csrf()
+                .and()
+                .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/"))
-                .and().logout()
-                .logoutSuccessUrl("/").permitAll().and().csrf().disable()
-                .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-                .exceptionHandling() .authenticationEntryPoint(restAuthenticationEntryPoint);
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(restAuthenticationEntryPoint).and().cors();
 
 
         http.headers().frameOptions().disable();
-
-        // @formatter:on
     }
 
     private Filter ssoFilter() {
-
         List<Filter> filters = new ArrayList<>();
 
         OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
@@ -95,10 +100,23 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8081"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+
+    @Bean
     public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
         FilterRegistrationBean registration = new FilterRegistrationBean();
+
         registration.setFilter(filter);
         registration.setOrder(-100);
+
         return registration;
     }
 
@@ -125,6 +143,7 @@ public class Oauth2Config extends WebSecurityConfigurerAdapter {
     public ResourceServerProperties kakaoResource() {
         return new ResourceServerProperties();
     }
+
 
 
 }

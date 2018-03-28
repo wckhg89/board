@@ -5,7 +5,8 @@ import LoginModalView from "../view/component/LoginModalView";
 export default Backbone.Model.extend({
 
     idAttribute: '_id',
-    url: 'http://13.125.34.108:8081/api/board/write',
+    // url: 'http://hwjswedding.com:8081/api/board/write',
+    url: 'http://localhost:8081/api/board/write',
 
     defaults() {
         return {
@@ -17,13 +18,6 @@ export default Backbone.Model.extend({
         }
     },
 
-    // sync : function(method, collection, options) {
-    //     options.dataType = "jsonp";
-    //     options.contentType = "application/javascript";
-    //     return Backbone.sync(method, collection, options);
-    // },
-
-
     parse: function(data) {
         return data;
     },
@@ -32,7 +26,6 @@ export default Backbone.Model.extend({
     },
 
     renderModal () {
-        console.log("!");
         new LoginModalView();
     },
 
@@ -40,7 +33,7 @@ export default Backbone.Model.extend({
         let self = this;
         this.save(null, {
             type: 'POST',
-            success: function (model, resp) {
+            success: function () {
                 alert("축하메시지를 작성해주셔서\n감사합니다:D");
                 self.trigger('recent');
 

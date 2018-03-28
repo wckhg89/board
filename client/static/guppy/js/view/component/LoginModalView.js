@@ -11,8 +11,6 @@ export default Backbone.View.extend({
         let view = this.render();
 
         view.$el.modal();
-
-
     },
 
     render () {

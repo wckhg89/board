@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 
 @RestController
+@CrossOrigin(value = "*", origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 @RequestMapping(value = "/api/board")
 public class BoardRestController {
 
@@ -32,10 +33,9 @@ public class BoardRestController {
         this.boardService = boardService;
     }
 
-    @PostMapping(value= "/write", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value= "/write")
     public ResponseEntity<String> writeBoard (HttpSession session,
                                             @RequestBody Board board) {
-
         User user = (User) session.getAttribute("user");
         board.setUser(user);
 
@@ -44,9 +44,8 @@ public class BoardRestController {
         return new ResponseEntity<>("{\"ok\":\"Registration succeeded\"}",HttpStatus.OK);
     }
 
-    @GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Page<Board>> findBoards (Pageable pageable) {
-
         return boardService.findByMethod(pageable);
     }
 

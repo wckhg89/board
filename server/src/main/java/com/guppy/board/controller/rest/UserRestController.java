@@ -4,9 +4,7 @@ import com.guppy.board.domain.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,10 +14,11 @@ import javax.servlet.http.HttpSession;
  */
 
 @RestController
+@CrossOrigin(value = "*", origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 @RequestMapping(value = "/api/user")
 public class UserRestController {
 
-    @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
     public ResponseEntity<User> getUserInfo (HttpSession session) {
 
         User user = (User) session.getAttribute("user");

@@ -4,7 +4,8 @@ import BoardModel from '../model/BoardModel'
 
 export default Backbone.Collection.extend({
     model : BoardModel,
-    url: 'http://13.125.34.108:8081/api/board/list',
+    // url: 'http://hwjswedding.com:8081/api/board/list',
+    url: 'http://localhost:8081/api/board/list',
 
     initialize:function () {
         this.totalCount = 0;
@@ -17,11 +18,6 @@ export default Backbone.Collection.extend({
         this.dir = "desc";
     },
 
-    sync : function(method, collection, options) {
-        options.dataType = "jsonp";
-        options.contentType = "application/javascript";
-        return Backbone.sync(method, collection, options);
-    },
 
 
     parse: function(data) {
@@ -44,9 +40,11 @@ export default Backbone.Collection.extend({
         this.fetch({
             reset: true,
             data: data,
-            contentType: "application/javascript",
-            success: function (collection, response, options) {
+            success: function () {
                 self.trigger('renderList');
+            },
+            error : function () {
+                console.log("@");
             }
         });
     },

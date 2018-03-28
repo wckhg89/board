@@ -4,14 +4,10 @@ import com.guppy.board.domain.User;
 import com.guppy.board.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -48,7 +44,8 @@ public class OauthController {
         // todo : 만일 서버가 여러대이면 Redis와 같은 글로벌 캐시를 써서 세션 관리를 해야함
         httpSession.setAttribute("user", user);
 
-        return "redirect:http://hwjswedding.com/";
+        //return "redirect:http://hwjswedding.com/";
+        return "redirect:/";
     }
 
     @GetMapping("/kakao/complete")
@@ -66,7 +63,8 @@ public class OauthController {
         // todo : 만일 서버가 여러대이면 Redis와 같은 글로벌 캐시를 써서 세션 관리를 해야함
         httpSession.setAttribute("user", user);
 
-        return "redirect:http://hwjswedding.com/";
+        //return "redirect:http://hwjswedding.com/";
+        return "redirect:/";
     }
 
 }

@@ -2,7 +2,8 @@
 'use strict';
 
 export default Backbone.Model.extend({
-    url: 'http://13.125.34.108:8081/api/user/info',
+    // url: 'http://hwjswedding.com:8081/api/user/info',
+    url: 'http://localhost:8081/api/user/info',
 
     defaults() {
         return {
@@ -11,11 +12,11 @@ export default Backbone.Model.extend({
         }
     },
 
-    sync : function(method, collection, options) {
-        options.dataType = "jsonp";
-        options.contentType = "application/javascript";
-        return Backbone.sync(method, collection, options);
-    },
+    // sync : function(method, model, options) {
+    //     options.dataType = "jsonp";
+    //     options.contentType = "application/javascript";
+    //     return Backbone.sync(method, model, options);
+    // },
 
 
     parse: function(data) {
@@ -31,9 +32,10 @@ export default Backbone.Model.extend({
         let self = this;
 
         this.fetch({
-            success: function (options) {
+            type: 'GET',
+            success: function () {
                 self.trigger('renderUserInfo');
-            }, error: function (options) {
+            }, error: function () {
                 self.trigger('renderUserInfo');
             }
         });
